@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lighthouse Score Animation</title>
+    <style>
+        * {
+            font-family: Helvetica, sans-serif;
+        }
+
+        :root {
+            --spinner-circle-size: 48px;
+            --spinner-circumference: calc(56px * 2 * PI);
+            --score-percentage: 90;
+            --spinner-circumference-offset: calc(var(--spinner-circumference) - (var(--spinner-circumference) / 100 * var(--score-percentage)));
+        }
+
+        .wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            text-decoration: none;
+            width: fit-content;
+            padding: 1rem;
+        }
+
+        .spinner-container {
+            position: relative;
+            width: var(--spinner-circle-size);
+            height: var(--spinner-circle-size);
+            color: #080;
+            fill: #0c6;
+            stroke: #0c6;
+            stroke-linecap: round;
+        }
+
+        .spinner-base {
+            opacity: 0.1;
+        }
+
+        .spinner-arc {
+            fill: none;
+            transform-origin: 50% 50%;
+            transform: rotateZ(-90deg);
+            stroke-dasharray: var(--spinner-circumference);
+            stroke-dashoffset: var(--spinner-circumference);
+            animation: load-gauge 2s ease both;
+            transition: stroke-dashoffset 1s ease;
+            animation-delay: 250ms;
+        }
+
+        @keyframes load-gauge {
+            to {
+                stroke-dashoffset: var(--spinner-circumference-offset);
+            }
+        }
+
+
+        .percentage-label {
+            position: absolute;
+            line-height: var(--spinner-circle-size);
+            font-size: 1.1rem;
+            font-weight: 400;
+            text-align: center;
+            letter-spacing: 0.1rem;
+        }
+
+        .bottom-label {
+            font-size: 0.9rem;
+            font-family: Helvetica, sans-serif;
+            font-weight: 500;
+            line-height: var(--gauge-label-line-height);
+            margin-top: 10px;
+            text-align: center;
+            color: var(--report-text-color);
+            word-break: keep-all;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper">
+    <svg class="spinner-container" viewBox="0 0 120 120">
+        <circle class="spinner-base" r="56" cx="60" cy="60"></circle>
+        <circle class="spinner-arc" r="56" cx="60" cy="60" stroke-width="8"></circle>
+    </svg>
+    <div class="percentage-label">90</div>
+    <div class="bottom-label">Speed</div>
+</div>
+</body>
+</html>
